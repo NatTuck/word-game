@@ -2,6 +2,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Button } from 'flowbite-react';
 import $ from 'cash-dom';
 
 import { selectDefaults } from './selectors';
@@ -10,7 +11,7 @@ import store from './store';
 import { Link } from './components';
 
 function Home() {
-  const {view, guesses} = useSelector(selectDefaults);
+  const {view, guesses, score} = useSelector(selectDefaults);
   const dispatch = useDispatch();
 
   function makeGuess(ch) {
@@ -38,19 +39,18 @@ function Home() {
     <div>
       <h1 className="font-bold text-2xl">Word Game</h1>
 
+      <Button>New Game</Button>
+
       <div className="border-solid border-2 border-indigo-600 m-4 p-4">
         <p className="font-mono text-lg">{ view }</p>
         <p>Guesses: { guesses.toArray() }</p>
+        <p>Score: { score }</p>
       </div>
 
       <div>
-        <p>Actions:</p>
+        <p>Guess a letter. Vowels are worth no points.</p>
         <p>{ guessLinks }</p>
-        <ul>
-          <li>Guess Non-Vowel</li>
-          <li>Guess Vowel</li>
-          <li>Guess Solution</li>
-        </ul>
+
       </div>
     </div>
   );
