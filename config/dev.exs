@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :word_game, WordGame.Repo,
-  database: Path.expand("../word_game_dev.db", Path.dirname(__ENV__.file)),
+  database: Path.expand("../db/word_game_dev.db", Path.dirname(__ENV__.file)),
   pool_size: 5,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
