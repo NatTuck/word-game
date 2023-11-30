@@ -14,6 +14,13 @@ function Home() {
   const {view, guesses, score} = useSelector(selectDefaults);
   const dispatch = useDispatch();
 
+  function newGame(ev) {
+    ev.preventDefault();
+    dispatch({
+      type: 'new-game',
+    });
+  }
+
   function makeGuess(ch) {
     return (ev) => {
       ev.preventDefault();
@@ -39,7 +46,7 @@ function Home() {
     <div>
       <h1 className="font-bold text-2xl">Word Game</h1>
 
-      <Button>New Game</Button>
+      <Button onClick={newGame}>New Game</Button>
 
       <div className="border-solid border-2 border-indigo-600 m-4 p-4">
         <p className="font-mono text-lg">{ view }</p>

@@ -37,6 +37,10 @@ function score(state = 0, action) {
 }
 
 function rootReducer(state = {}, action) {
+  if (action.type === 'new-game') {
+    return rootReducer(undefined, { type: 'RESET' });
+  }
+
   if (action.type === 'add-guess') {
     if (vowels.has(action.data) || state.guesses.has(action.data)) {
       action.points = 0
