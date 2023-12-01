@@ -36,6 +36,17 @@ function score(state = 0, action) {
   }
 }
 
+function user(state = null, action) {
+  switch (action.type) {
+  case 'set-user':
+    return action.data;
+  case 'clear-user':
+    return null
+  default:
+    return state;
+  }
+}
+
 function rootReducer(state = {}, action) {
   if (action.type === 'new-game') {
     return rootReducer(undefined, { type: 'RESET' });
@@ -54,7 +65,7 @@ function rootReducer(state = {}, action) {
     }
   }
 
-  let rfn = combineReducers({secret, guesses, score});
+  let rfn = combineReducers({secret, guesses, score, user});
   return freeze(rfn(state, action));
 }
 
