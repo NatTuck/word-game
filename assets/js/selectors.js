@@ -22,6 +22,7 @@ export const selectDefaults = createSelector(
       view: selectView(state),
       guesses: state.guesses,
       score: state.score,
+      user: state.user,
     };
   }
 );
