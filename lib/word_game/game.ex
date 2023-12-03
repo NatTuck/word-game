@@ -22,10 +22,14 @@ defmodule WordGame.Game do
     }
   end
 
-  def puzzle_view(%Game{} = game) do
+  def puzzle_letters(%Game{} = game) do
     game.secret
     |> Enum.join(" ")
     |> String.split("")
+  end
+
+  def puzzle_view(%Game{} = game) do
+    puzzle_letters(game)
     |> Enum.map(fn ch ->
       if !Regex.match?(~r/^\w$/, ch) || MapSet.member?(game.guesses, ch) do
         ch
@@ -44,6 +48,26 @@ defmodule WordGame.Game do
 
   def add_player(%Game{} = game, name) do
     %Game{ game | players: MapSet.put(game.players, name) }
+  end
+
+  def make_guess(%Game{} = game, name, ch) do
+    unless MapSet.member?(game.players, name) do
+      {:error, game}
+    end
+
+    if MapSet.member?(game.guesses, ch) do
+      {:ok, game}
+    else
+      guesses = MapSet.put(game.guesses, ch)
+      points = puzzle_letters(game)
+      |> Enum.filter(&(&1 == ch))
+      |> length()
+      scores = Map.update game.scores, name, points, fn sc0 ->
+        sc0 + points
+      end
+      game1 = %Game{ game | guesses: guesses, scores: scores }
+      {:ok, game1}
+    end
   end
 
   def random_secret do
