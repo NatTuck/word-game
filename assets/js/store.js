@@ -40,15 +40,13 @@ function user(state = null, action) {
   switch (action.type) {
   case 'set-user':
     return action.data;
-  case 'clear-user':
-    return null
   default:
     return state;
   }
 }
 
 function rootReducer(state = {}, action) {
-  if (action.type === 'new-game') {
+  if (action.type === 'reset') {
     return rootReducer(undefined, { type: 'RESET' });
   }
 

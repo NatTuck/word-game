@@ -65,6 +65,14 @@ function Play() {
   const { guesses, score, user, view }  = useSelector(selectDefaults);
   const dispatch = useDispatch();
 
+  function reset(ev) {
+    ev.preventDefault();
+    dispatch({
+      type: 'reset',
+      data: name,
+    });
+  }
+
   function newGame(ev) {
     ev.preventDefault();
     dispatch({
@@ -85,21 +93,20 @@ function Play() {
   let guessLinks = letters
       .filter((ch) => !guesses.has(ch))
       .map((ch) => (
-        <span key={ch}>
-          <Link onClick={makeGuess(ch)}>
-            {ch}
-          </Link>
-        </span>
+        <Button key={ch} onClick={makeGuess(ch)} className="m-2">
+          {ch}
+        </Button>
       ));
 
 
   return (
     <div>
-      <p>Playing as: { user }, <Link onClick>Log out</Link></p>
+      <div className="flex justify-end">
+        <span className="px-4 py-2">Playing as: { user }</span>
+        <Button onClick={reset} color="warning">Reset</Button>
+      </div>
+
       <h1 className="font-bold text-2xl">Word Game</h1>
-
-      <Button onClick={newGame}>New Game</Button>
-
 
       <div className="border-solid border-2 border-indigo-600 m-4 p-4">
         <p className="font-mono text-lg">{ view }</p>
@@ -109,8 +116,9 @@ function Play() {
 
       <div>
         <p>Guess a letter. Vowels are worth no points.</p>
-        <p>{ guessLinks }</p>
-
+        <div className="flex grid-flow-col flex-wrap">
+          { guessLinks }
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 # WordGame
 
-## All of those rules are nonsense:
+## Game Rules
 
  - Hangman
  - Guess one letter per turn
  - Points for revealing letters - except vowels.
  - Multiplayer: Most points wins, multiple rounds
-   - Multiple rounds lets differnet players go first.
+   - Multiple rounds lets different players go first.
 
 ## Default README
 
