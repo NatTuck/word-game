@@ -4,14 +4,7 @@ import { OrderedSet } from 'immutable';
 import { freeze } from 'icepick';
 import { shuffle, take } from 'lodash';
 
-import words from './words';
-import { vowels } from './game';
-
-function randomSecret() {
-  return take(shuffle(words), 4);
-}
-
-function secret(state = randomSecret(), action) {
+function secret(state = [], action) {
   switch (action.type) {
   default:
     return state;

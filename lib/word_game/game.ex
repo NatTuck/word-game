@@ -46,11 +46,12 @@ defmodule WordGame.Game do
     end
   end
 
-  def add_player(%Game{} = game, name) do
-    %Game{ game | players: MapSet.put(game.players, name) }
+  def join(%Game{} = game, name) do
+    game1 = %Game{ game | players: MapSet.put(game.players, name) }
+    {:ok, game1}
   end
 
-  def make_guess(%Game{} = game, name, ch) do
+  def guess(%Game{} = game, name, ch) do
     unless MapSet.member?(game.players, name) do
       {:error, game}
     end
@@ -59,15 +60,23 @@ defmodule WordGame.Game do
       {:ok, game}
     else
       guesses = MapSet.put(game.guesses, ch)
-      points = puzzle_letters(game)
-      |> Enum.filter(&(&1 == ch))
-      |> length()
+      points = calc_points(game, ch)
       scores = Map.update game.scores, name, points, fn sc0 ->
         sc0 + points
       end
       game1 = %Game{ game | guesses: guesses, scores: scores }
       {:ok, game1}
     end
+  end
+
+  def points(_game, ch) when ch in ["a", "e", "i", "o", "u"] do
+    0
+  end
+
+  def calc_points(game, ch) do
+    puzzle_letters(game)
+    |> Enum.filter(&(&1 == ch))
+    |> length()
   end
 
   def random_secret do

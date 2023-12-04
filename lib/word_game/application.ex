@@ -20,7 +20,8 @@ defmodule WordGame.Application do
       # Start a worker by calling: WordGame.Worker.start_link(arg)
       # {WordGame.Worker, arg},
       # Start to serve requests, typically the last entry
-      WordGameWeb.Endpoint
+      WordGameWeb.Endpoint,
+      WordGame.GameServer,
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
