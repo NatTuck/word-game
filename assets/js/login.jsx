@@ -16,8 +16,8 @@ export default function Login() {
     join_game("0", name).then((resp) => {
       console.log("Joined", resp);
       dispatch({
-        type: 'set-user',
-        data: name,
+        type: 'replace-state',
+        data: resp,
       });
     });
   }

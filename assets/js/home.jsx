@@ -5,15 +5,15 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Button, TextInput } from 'flowbite-react';
 import $ from 'cash-dom';
 
-import { select, selectDefaults } from './selectors';
+import { selectName, selectDefaults } from './selectors';
 import store from './store';
 import Login from './login';
 import Play from './play';
 
 function Home() {
-  const user = useSelector(select("user"));
+  const name = useSelector(selectName);
 
-  if (user) {
+  if (name) {
     return <Play />;
   }
   else {
