@@ -8,9 +8,15 @@ import { shuffle, take } from 'lodash';
 
 function name(state = null, action) {
   switch (action.type) {
-  case 'replace-state':
-    console.log("replace name", state, action.data.name);
-    return action.data.name;
+  case 'update-view':
+    if (action.data.hasOwnProperty('name')) {
+      return action.data.name;
+    }
+    else {
+      return state;
+    }
+  case 'reset-name':
+    return null;
   default:
     return state;
   }
@@ -18,7 +24,7 @@ function name(state = null, action) {
 
 function active(state = null, action) {
   switch (action.type) {
-  case 'replace-state':
+  case 'update-view':
     return action.data.active;
   default:
     return state;
@@ -27,7 +33,7 @@ function active(state = null, action) {
 
 function puzzle(state = "", action) {
   switch (action.type) {
-  case 'replace-state':
+  case 'update-view':
     return action.data.puzzle;
   default:
     return state;
@@ -36,7 +42,7 @@ function puzzle(state = "", action) {
 
 function guesses(state = OrderedSet(), action) {
   switch (action.type) {
-  case 'replace-state':
+  case 'update-view':
     return OrderedSet(action.data.guesses);
   default:
     return state;
@@ -45,7 +51,7 @@ function guesses(state = OrderedSet(), action) {
 
 function players(state = [], action) {
   switch (action.type) {
-  case 'replace-state':
+  case 'update-view':
     return action.data.players;
   default:
     return state;
@@ -53,10 +59,10 @@ function players(state = [], action) {
 }
 
 function rootReducer(state = {}, action) {
-  console.log("state0", state)
+  //console.log("state0", state)
   let rfn = combineReducers({name, puzzle, guesses, players, active});
   let state1 = freeze(rfn(state, action));
-  console.log("state1", state1)
+  //console.log("state1", state1)
   return state1;
 }
 

@@ -12,8 +12,7 @@ export default function Play() {
   function reset(ev) {
     ev.preventDefault();
     dispatch({
-      type: 'reset',
-      data: name,
+      type: 'reset-name',
     });
   }
 
@@ -22,12 +21,19 @@ export default function Play() {
       ev.preventDefault();
       add_game_guess(ch).then((resp) => {
         dispatch({
-          type: 'replace-state',
+          type: 'update-view',
           data: resp,
         });
       });
     };
   }
+
+  let playerScores = players
+      .map(({name, score}) => 
+        <span key={name} className="p-2">
+          {name}: {score}
+        </span>
+      );
   
   let guessLinks = letters
       .filter((ch) => !guesses.has(ch))
@@ -49,8 +55,11 @@ export default function Play() {
 
       <div className="border-solid border-2 border-indigo-600 m-4 p-4">
         <p className="font-mono text-lg">{ puzzle }</p>
-        <p>Guesses: { guesses.toArray() }</p>
-        <p>Scores: ...</p>
+        <p>
+          Guesses:
+          <span className="font-mono px-2">{ guesses.toArray().join(" ") }</span>
+        </p>
+        <p>Scores: { playerScores } </p>
       </div>
 
       <div>

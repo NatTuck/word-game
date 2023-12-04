@@ -16,7 +16,7 @@ export default function Login() {
     join_game("0", name).then((resp) => {
       console.log("Joined", resp);
       dispatch({
-        type: 'replace-state',
+        type: 'update-view',
         data: resp,
       });
     });
