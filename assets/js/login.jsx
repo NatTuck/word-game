@@ -7,10 +7,12 @@ import { join_game } from './game';
 
 export default function Login() {
   const [name, setName] = useState("");
+  const [wait, setWait] = useState(false);
   const dispatch = useDispatch();
 
   function join(ev) {
     ev.preventDefault();
+    setWait(true);
     join_game("0", name).then((resp) => {
       console.log("Joined", resp);
       dispatch({
@@ -40,11 +42,13 @@ export default function Login() {
           <TextInput name="name" className="my-2"
                      value={name}
                      onKeyPress={onKey}
-                     onChange={onChange} />
+                     onChange={onChange}
+                     disabled={wait} />
         </label>
-        <Button className="my-2" onClick={join}>Join Game</Button>
+        <Button className="my-2"
+                disabled={wait}
+                onClick={join}>Join Game</Button>
       </form>
     </div>
   );
 }
-

@@ -4,12 +4,7 @@ import { OrderedSet } from 'immutable';
 import { freeze } from 'icepick';
 import { shuffle, take } from 'lodash';
 
-function secret(state = [], action) {
-  switch (action.type) {
-  default:
-    return state;
-  }
-}
+// TODO: Pull state entirely from server.
 
 function guesses(state = OrderedSet(), action) {
   switch (action.type) {
