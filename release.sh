@@ -6,7 +6,7 @@ fi
 
 . prod-env.sh
 
-sudo service word-game stop
+#sudo service word-game stop
 
 echo "Building..."
 
@@ -17,7 +17,7 @@ mix deps.get
 mix compile
 
 
-if [[ !-e "$DATABASE_PATH" ]]; then
+if [[ ! -e "$DATABASE_PATH" ]]; then
     mkdir -p ~/db
     mix ecto.setup
 fi
@@ -43,4 +43,4 @@ echo "Starting app..."
 
 #_build/prod/rel/inkfish/bin/inkfish foreground
 
-sudo service inkfish start
+#sudo service inkfish start

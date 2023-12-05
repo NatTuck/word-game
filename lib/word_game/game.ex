@@ -24,6 +24,10 @@ defmodule WordGame.Game do
     }
   end
 
+  def over?(%Game{} = game) do
+    MapSet.size(game.guesses) >= 26
+  end
+
   def puzzle_letters(%Game{} = game) do
     game.secret
     |> Enum.join(" ")

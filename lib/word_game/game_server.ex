@@ -2,6 +2,7 @@ defmodule WordGame.GameServer do
   use GenServer
 
   alias WordGame.Game
+  alias WordGame.Eggman
 
   def start(game_id) do
     spec = %{
@@ -38,8 +39,13 @@ defmodule WordGame.GameServer do
 
   @impl true
   def init(game) do
+    # Kill games after half an hour.
     half_hour = 30 * 60 * 1000
     Process.send_after(self(), :shutdown, half_hour)
+
+    # Add a robot player
+    {:ok, game} = Game.join(game, "DrEggman")
+    {:ok, game} = Eggman.try_move(game)
     {:ok, game}
   end
 
@@ -51,12 +57,18 @@ defmodule WordGame.GameServer do
   @impl true
   def handle_call({:join, name}, _from, game) do
     {:ok, game} = Game.join(game, name)
+    {:ok, game} = Eggman.try_move(game)
     {:reply, {:ok, Game.view(game)}, game}
   end
 
   @impl true
   def handle_call({:guess, name, ch}, _from, game) do
     {:ok, game} = Game.guess(game, name, ch)
+    {:ok, game} = Eggman.try_move(game)
+    if Game.over?(game) do
+      minute = 60 * 1000
+      Process.send_after(self(), :shutdown, minute)
+    end
     {:reply, {:ok, Game.view(game)}, game}
   end
 
