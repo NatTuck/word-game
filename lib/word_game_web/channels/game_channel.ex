@@ -4,9 +4,10 @@ defmodule WordGameWeb.GameChannel do
   alias WordGame.GameServer
 
   @impl true
-  def join("game:" <> _game_id, %{"name" => name}, socket) do
-    {:ok, view} = GameServer.join(name)
+  def join("game:" <> game, %{"name" => name}, socket) do
+    {:ok, view} = GameServer.join(game, name)
     socket = socket
+    |> assign(:game, game)
     |> assign(:name, name)
     |> assign(:view, view)
     send(self(), :broadcast)
@@ -16,8 +17,8 @@ defmodule WordGameWeb.GameChannel do
   @impl true
   def handle_in("guess", %{"ch" => ch}, socket) do
     name = socket.assigns[:name]
-    {:ok, view} = GameServer.guess(name, ch)
-    IO.inspect {:view, view}
+    game = socket.assigns[:game]
+    {:ok, view} = GameServer.guess(game, name, ch)
     socket = assign(socket, :view, view)
     send(self(), :broadcast)
     {:noreply, socket}

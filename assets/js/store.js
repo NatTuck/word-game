@@ -22,6 +22,15 @@ function name(state = null, action) {
   }
 }
 
+function game(state = null, action) {
+  switch (action.type) {
+  case 'update-view':
+    return action.data.game;
+  default:
+    return state;
+  }
+}
+
 function active(state = null, action) {
   switch (action.type) {
   case 'update-view':
@@ -60,7 +69,7 @@ function players(state = [], action) {
 
 function rootReducer(state = {}, action) {
   //console.log("state0", state)
-  let rfn = combineReducers({name, puzzle, guesses, players, active});
+  let rfn = combineReducers({game, name, puzzle, guesses, players, active});
   let state1 = freeze(rfn(state, action));
   //console.log("state1", state1)
   return state1;

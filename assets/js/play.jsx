@@ -6,7 +6,7 @@ import { selectName, selectDefaults } from './selectors';
 import { letters, add_game_guess } from './game';
 
 export default function Play() {
-  const { guesses, puzzle, name, players }  = useSelector(selectDefaults);
+  const { game_id, active, guesses, puzzle, name, players }  = useSelector(selectDefaults);
   const dispatch = useDispatch();
 
   function reset(ev) {
@@ -39,7 +39,7 @@ export default function Play() {
       .filter((ch) => !guesses.has(ch))
       .map((ch) => (
         <Button key={ch} onClick={makeGuess(ch)} className="m-2">
-          {ch}
+          { ch }
         </Button>
       ));
 
@@ -51,7 +51,7 @@ export default function Play() {
         <Button onClick={reset} color="warning">Reset</Button>
       </div>
 
-      <h1 className="font-bold text-2xl">Word Game</h1>
+      <h1 className="font-bold text-2xl">Word Game: {game_id}</h1>
 
       <div className="border-solid border-2 border-indigo-600 m-4 p-4">
         <p className="font-mono text-lg">{ puzzle }</p>
@@ -59,7 +59,8 @@ export default function Play() {
           Guesses:
           <span className="font-mono px-2">{ guesses.toArray().join(" ") }</span>
         </p>
-        <p>Scores: { playerScores } </p>
+        <p>Current turn: { active }</p>
+        <p>Scores: { playerScores }</p>
       </div>
 
       <div>

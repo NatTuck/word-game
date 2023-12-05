@@ -3,25 +3,43 @@ defmodule WordGame.GameServer do
 
   alias WordGame.Game
 
-  def start_link(_) do
-    game = Game.new()
-    GenServer.start_link(__MODULE__, game, name: __MODULE__)
+  def start(game_id) do
+    spec = %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [game_id]},
+      restart: :transient
+    }
+    DynamicSupervisor.start_child(WordGame.GameSup, spec)
   end
 
-  def peek() do
-    GenServer.call(__MODULE__, :peek)
+  def start_link(game_id) do
+    game = Game.new(game_id)
+    GenServer.start_link(__MODULE__, game, name: reg(game_id))
   end
 
-  def join(name) do
-    GenServer.call(__MODULE__, {:join, name})
+  def reg(game_id) do
+    {:via, Registry, {WordGame.GameReg, game_id}}
   end
 
-  def guess(name, ch) do
-    GenServer.call(__MODULE__, {:guess, name, ch})
+  def peek(game_id) do
+    GenServer.call(reg(game_id), :peek)
+  end
+
+  def join(game_id, name) do
+    if Registry.lookup(WordGame.GameReg, game_id) == [] do
+      start(game_id)
+    end
+    GenServer.call(reg(game_id), {:join, name})
+  end
+
+  def guess(game_id, name, ch) do
+    GenServer.call(reg(game_id), {:guess, name, ch})
   end
 
   @impl true
   def init(game) do
+    half_hour = 30 * 60 * 1000
+    Process.send_after(self(), :shutdown, half_hour)
     {:ok, game}
   end
 
@@ -40,5 +58,10 @@ defmodule WordGame.GameServer do
   def handle_call({:guess, name, ch}, _from, game) do
     {:ok, game} = Game.guess(game, name, ch)
     {:reply, {:ok, Game.view(game)}, game}
+  end
+
+  @impl true
+  def handle_info(:shutdown, game) do
+    {:stop, :normal, game}
   end
 end
