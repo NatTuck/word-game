@@ -21,9 +21,11 @@ defmodule WordGame.Scores do
     Repo.all(Score)
   end
 
-
   def save_scores(scores) do
     Enum.each scores, fn {name, points} ->
+      get_score_by_name(name)
+      |> Score.add_game(points)
+      |> Repo.insert!(on_conflict: :replace_all)
     end
   end
 

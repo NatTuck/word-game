@@ -25,7 +25,7 @@ defmodule WordGame.Game do
   end
 
   def over?(%Game{} = game) do
-    MapSet.size(game.guesses) >= 26
+    !Regex.match?(~r/\-/, puzzle_view(game)) || MapSet.size(game.guesses) >= 26
   end
 
   def puzzle_letters(%Game{} = game) do

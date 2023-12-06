@@ -3,6 +3,7 @@ defmodule WordGame.GameServer do
 
   alias WordGame.Game
   alias WordGame.Eggman
+  alias WordGame.Scores
 
   def start(game_id) do
     spec = %{
