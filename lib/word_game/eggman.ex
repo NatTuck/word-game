@@ -2,7 +2,7 @@ defmodule WordGame.Eggman do
   alias WordGame.Game
 
   def try_move(%Game{} = game) do
-    if game.active == "DrEggman" && !Game.over?(game) do
+    if game.active == "Eggman" && !Game.over?(game) do
       move(game)
     else
       {:ok, game}
@@ -11,7 +11,7 @@ defmodule WordGame.Eggman do
 
   def move(%Game{} = game) do
     ch = unguessed(game) |> Enum.at(0)
-    Game.guess(game, "DrEggman", ch)
+    Game.guess(game, "Eggman", ch)
   end
 
   def unguessed(%Game{} = game) do
@@ -21,7 +21,7 @@ defmodule WordGame.Eggman do
   end
 
   def letters do
-    "abcdefghijlkmnopqrstuvwxyz"
+    "tnrshdlfcmgypwbvkjxzqeaoiu"
     |> String.split("")
     |> Enum.filter(&(&1 != ""))
   end

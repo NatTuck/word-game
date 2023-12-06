@@ -19,6 +19,17 @@ defmodule WordGameWeb.CoreComponents do
   alias Phoenix.LiveView.JS
   import WordGameWeb.Gettext
 
+  attr :href, :string, required: true
+  slot :inner_block, required: true
+
+  def navlink(assigns) do
+    ~H"""
+      <a href={@href} class="underline text-sky-600">
+        <%= render_slot(@inner_block) %>
+      </a>
+    """
+  end
+
   @doc """
   Renders a modal.
 

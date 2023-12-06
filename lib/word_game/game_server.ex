@@ -44,8 +44,7 @@ defmodule WordGame.GameServer do
     Process.send_after(self(), :shutdown, half_hour)
 
     # Add a robot player
-    {:ok, game} = Game.join(game, "DrEggman")
-    {:ok, game} = Eggman.try_move(game)
+    {:ok, game} = Game.join(game, "Eggman")
     {:ok, game}
   end
 
@@ -66,6 +65,7 @@ defmodule WordGame.GameServer do
     {:ok, game} = Game.guess(game, name, ch)
     {:ok, game} = Eggman.try_move(game)
     if Game.over?(game) do
+      Scores.save_scores(game.scores)
       minute = 60 * 1000
       Process.send_after(self(), :shutdown, minute)
     end

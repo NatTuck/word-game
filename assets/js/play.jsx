@@ -59,7 +59,7 @@ export default function Play() {
           Guesses:
           <span className="font-mono px-2">{ guesses.toArray().join(" ") }</span>
         </p>
-        <p>Current turn: { active }</p>
+        <CurrentTurn active={active} puzzle={puzzle} players={players} />
         <p>Scores: { playerScores }</p>
       </div>
 
@@ -73,3 +73,23 @@ export default function Play() {
   );
 }
 
+function CurrentTurn({active, puzzle, players}) {
+  if (puzzle.match(/\-/)) {
+    return (
+      <p>Current turn: { active }</p>
+    );
+  }
+
+  var winner = players[0];
+  for (var player of players) {
+    if (player.score > winner.score) {
+      winner = player;
+    }
+  }
+
+  let {name, score} = winner;
+  
+  return (
+    <p>Game done. Winner is {name}.</p>
+  );
+}

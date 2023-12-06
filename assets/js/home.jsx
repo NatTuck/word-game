@@ -22,7 +22,12 @@ function Home() {
 }
 
 function setup() {
-  let root = createRoot(document.getElementById('react-root'));
+  let rootDiv = document.getElementById('react-root');
+  if (!rootDiv) {
+    return;
+  }
+
+  let root = createRoot(rootDiv);
   root.render(
     <Provider store={store}>
       <React.StrictMode>

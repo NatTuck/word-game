@@ -1,0 +1,12 @@
+<div class="mx-auto max-w-2xl">
+  <.header>
+    Listing Scores
+  </.header>
+
+  <.table id="scores" rows={@scores}>
+    <:col :let={score} label="Name"><%= score.name %></:col>
+    <:col :let={score} label="Points"><%= score.points %></:col>
+    <:col :let={score} label="Games"><%= score.games %></:col>
+    <:col :let={score} label="Mean"><%= score.mean %></:col>
+  </.table>
+</div>
