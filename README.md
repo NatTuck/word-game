@@ -8,6 +8,24 @@
  - Multiplayer: Most points wins, multiple rounds
    - Multiple rounds lets different players go first.
 
+## Setup Using User Sessions
+
+To enable user services to start on boot:
+
+```bash
+$ loginctl enable-linger
+```
+
+Install and enable service.
+
+```bash
+$ mkdir -p ~/.config/systemd/user
+$ cp scripts/word-game-user.service ~/.config/systemd/user
+$ systemctl --user enable word-game-user
+```
+
+ref: https://wiki.archlinux.org/title/systemd/User
+
 ## Default README
 
 To start your Phoenix server:

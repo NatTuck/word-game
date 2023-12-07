@@ -1,0 +1,11 @@
+[Unit]
+Description=Word Game
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/word-game
+ExecStart=%h/word-game/scripts/start.sh
+
+[Install]
+WantedBy=default.target

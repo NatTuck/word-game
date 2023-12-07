@@ -4,9 +4,7 @@ if [[ -e ~/.asdf/asdf.sh ]]; then
     .  ~/.asdf/asdf.sh
 fi
 
-. prod-env.sh
-
-#sudo service word-game stop
+. scripts/prod-env.sh
 
 echo "Building..."
 
@@ -36,11 +34,5 @@ mix phx.digest
 echo "Generating release..."
 mix release --overwrite
 
-#echo "Stopping old copy of app, if any..."
-#_build/prod/rel/draw/bin/practice stop || true
-
-echo "Starting app..."
-
-#_build/prod/rel/inkfish/bin/inkfish foreground
-
-#sudo service inkfish start
+systemctl --user stop word-game-user || true
+systemctl --user start word-game-user
