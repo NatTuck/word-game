@@ -6,6 +6,9 @@ fi
 
 . scripts/prod-env.sh
 
+echo "MIX_ENV = " $MIX_ENV
+echo "PORT = " $PORT
+echo
 echo "Building..."
 
 mkdir -p ~/.config
