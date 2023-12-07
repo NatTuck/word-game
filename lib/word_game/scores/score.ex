@@ -20,13 +20,13 @@ defmodule WordGame.Scores.Score do
     |> validate_required([:name, :points, :games, :mean])
   end
 
-  def add_game(%Score{} = score, game_score) do
+  def add_game(%Score{} = score, name, game_score) do
     points0 = score.points || 0
     points = points0 + game_score
 
     games0 = score.games || 0
     games = games0 + 1
 
-    changeset(score, %{points: points, games: games, mean: points/games})
+    changeset(score, %{name: name, points: points, games: games, mean: points/games})
   end
 end

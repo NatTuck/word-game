@@ -18,13 +18,15 @@ defmodule WordGame.Scores do
 
   """
   def list_scores do
-    Repo.all(Score)
+    Repo.all from sc in Score,
+      order_by: {:desc, :mean},
+      limit: 200
   end
 
   def save_scores(scores) do
     Enum.each scores, fn {name, points} ->
       get_score_by_name(name)
-      |> Score.add_game(points)
+      |> Score.add_game(name, points)
       |> Repo.insert!(on_conflict: :replace_all)
     end
   end
