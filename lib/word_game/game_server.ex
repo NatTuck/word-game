@@ -45,8 +45,12 @@ defmodule WordGame.GameServer do
     Process.send_after(self(), :shutdown, half_hour)
 
     # Add a robot player
-    {:ok, game} = Game.join(game, "Eggman")
-    {:ok, game}
+    if game.game_id =~ ~r/^pvp/ do
+      {:ok, game}
+    else
+      {:ok, game} = Game.join(game, "Eggman")
+      {:ok, game}
+    end
   end
 
   @impl true
