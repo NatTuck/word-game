@@ -20,6 +20,8 @@ defmodule WordGame.Application do
       # Start a worker by calling: WordGame.Worker.start_link(arg)
       # {WordGame.Worker, arg},
       # Start to serve requests, typically the last entry
+      {Registry, keys: :unique, name: WordGame.GameReg},
+      {DynamicSupervisor, strategy: :one_for_one, name: WordGame.GameSup},
       WordGameWeb.Endpoint
     ]
 

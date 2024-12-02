@@ -8,8 +8,10 @@ const path = require("path")
 module.exports = {
   content: [
     "./js/**/*.js",
+    "./js/**/*.jsx",
     "../lib/word_game_web.ex",
-    "../lib/word_game_web/**/*.*ex"
+    "../lib/word_game_web/**/*.*ex",
+    "node_modules/flowbite-react/lib/esm/**/*.js"
   ],
   theme: {
     extend: {

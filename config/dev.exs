@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :word_game, WordGame.Repo,
-  database: Path.expand("../word_game_dev.db", Path.dirname(__ENV__.file)),
+  database: Path.expand("../db/word_game_dev.db", Path.dirname(__ENV__.file)),
   pool_size: 5,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
@@ -14,9 +14,8 @@ config :word_game, WordGame.Repo,
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
 config :word_game, WordGameWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  # Change to `ip: {127, 0, 0, 1}` to disallow access from other machines.
+  http: [ip: {0, 0, 0, 0}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
