@@ -1,3 +1,9 @@
+# User Service
+#  - loginctl enable-linger
+#  - This goes in ~/.config/systemd/user/inkfish.service
+#  - systemctl --user enable inkfish
+#  - systemctl --user start inkfish
+
 [Unit]
 Description=Word Game
 After=network.target
