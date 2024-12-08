@@ -90,6 +90,14 @@ defmodule WordGameWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      def truncate(text) do
+        if String.length(text) > 30 do
+          String.slice(text, 0, 27) <> "..."
+        else
+          text
+        end
+      end
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end
